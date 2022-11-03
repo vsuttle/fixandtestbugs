@@ -47,4 +47,14 @@ public class AssetVendor {
     public float getRoyaltyRate() {
         return royaltyRate;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder("\nAssetVendor: ")
+          .append("\n\tid:  ").append(getId())
+          .append("\n\tdisplayName: ").append(getDisplayName())
+          .append("\n\trelationshipLevel: ").append(getRelationshipLevel())
+          .append("\n\troyalytRate: ").append(getRoyaltyRate());
+        return builder.toString();
+    }
 }

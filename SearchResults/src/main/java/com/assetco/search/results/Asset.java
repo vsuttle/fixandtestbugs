@@ -102,4 +102,18 @@ public class Asset {
     public AssetVendor getVendor() {
         return vendor;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder("\nAsset:")
+          .append("\n\tid: ").append(getId())
+          .append("\n\ttitle: ").append(getTitle())
+          .append("\n\tthumbnailURI: ").append(getThumbnailURI())
+          .append("\n\tpreviewURI: ").append(getPreviewURI())
+          .append("\n\tpurchaseInfoLast30Days: ").append(purchaseInfoLast30Days)
+          .append("\n\tpurchaseInfoLast24Hours: ").append(purchaseInfoLast24Hours)
+          .append("\n\ttopics: ").append(topics)
+          .append("\n\tvendor").append(vendor.toString());
+        return builder.toString();
+    }
 }
