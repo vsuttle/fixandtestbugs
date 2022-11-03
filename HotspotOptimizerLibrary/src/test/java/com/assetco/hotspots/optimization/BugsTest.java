@@ -100,45 +100,14 @@ public class BugsTest {
   private void thenHotspotDoesNotHave(HotspotKey key, Asset... assets) {
     Hotspot hotspot = searchresults.getHotspot(key);
     List<Asset> members = hotspot.getMembers();
-    int numMembers = members == null
-      ? 0
-      : members.size();
-    System.out.println("thenHotspotDoesNotHave: numMembers: " + numMembers);
-
-    for(Asset asset : assets) {
-      boolean found = membersHasAsset(members, asset);
-      assertFalse(found, "thenHotspotDoesNotHave failed");
+    for (Asset asset : assets) {
+      assertFalse(members.contains(asset), "thenHotspotDoesNotHave failed");
     }
   }
 
   private void thenHotspotHasExactly(HotspotKey hotspotKey, List<Asset> expected) {
-    Hotspot hotspot = searchresults.getHotspot(hotspotKey);
-    List<Asset> members = hotspot.getMembers();
-    Asset [] membersArray  = members.toArray(new Asset[members.size()]);
-    Asset [] expectedArray = expected.toArray(new Asset[expected.size()]);
-    boolean matched = Arrays.deepEquals(membersArray, expectedArray);
-    System.out.println("thenHotspotHasExactly: matched: " + matched);
-    assertTrue(matched, "thenHotspotHasExactly failed to match");
-  }
-
-  private boolean membersHasAsset (List<Asset> members, Asset asset) {
-    boolean found = false;
-    System.out.println("MembersHasAsset");
-    System.out.println(asset.toString() + "\n");
-    for(Asset member : members) {
-      System.out.println("member: " + member.toString() + "\n");
-      Object memberId = member.getId();
-      Object assetId  = asset.getId();
-
-      if (memberId != null && assetId != null && memberId instanceof String && assetId instanceof String) {
-        found = ((String)memberId).equals(((String) assetId));
-        if (found) {
-          System.out.println("membersHasAsset: found asset with id: " + assetId);
-//          break;
-        }
-      }
-    }
-    return found;
+    List<Asset> members = searchresults.getHotspot(hotspotKey).getMembers();
+    Assertions.assertArrayEquals(members.toArray(), expected.toArray(), "thenHotspotHasExactly failed to match");
   }
 
   private void printVendor(AssetVendor vendor) {
